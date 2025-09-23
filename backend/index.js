@@ -1,6 +1,5 @@
 const express = require('express')
 const cors = require('cors')
-const serverless = require('serverless-http')
 const app = express()
 const {initializeDatabase} = require('./db/db.connect')
 app.use(express.json())
@@ -26,4 +25,4 @@ if (process.env.NODE_ENV !== "serverless"){
     })
 }
 
-module.exports.handler = serverless(app)
+module.exports = app
