@@ -6,12 +6,13 @@ const EventListing = ({ searchQuery }) => {
   const [eventType, setEventType] = useState("All");
   const [showAll, setShowAll] = useState(false);
 
-  const events =
-    eventType === "All" ? "/" : eventType === "Online" ? "/online" : "/offline";
+  const { data, loading, error } = useFetch("/", []);
 
-  const { data, loading, error } = useFetch(events, []);
+  const typeFilteredEvents = data?.filter((event) => 
+  eventType === "All" ? true : event.eventType === eventType
+)
 
-  const filteredEvents = data?.filter(
+  const filteredEvents = typeFilteredEvents?.filter(
     (event) =>
       event.title.toLowerCase().includes(searchQuery) ||
       event.tags?.some((tag) => tag.toLowerCase().includes(searchQuery))
@@ -70,7 +71,7 @@ const EventListing = ({ searchQuery }) => {
               });
               const formattedYear = dateObj.getFullYear();
               return (
-                <div className="col-md-4 mb-4" key={event._id}>
+                <div className="col-md-4 mb-5 mb-md-4" key={event._id}>
                   <Link
                     to={`/events/${event._id}`}
                     className="text-decoration-none text-dark"
