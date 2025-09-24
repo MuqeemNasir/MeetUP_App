@@ -8,20 +8,19 @@ const EventListing = ({ searchQuery }) => {
 
   const { data, loading, error } = useFetch("/", []);
 
-  const filteredEvents = data?.filter((event) => {
-    if(eventType !== "All" && event.eventType !== eventType){
-      return false
-    }
-    const query = searchQuery.trim().toLowerCase()
-    if(!query){
-      return true
-    }
-    return(
-      event.title.toLowerCase().includes(query) ||
-      event.tags?.some((tag) => tag.toLowerCase().includes(query))
-    )
+  let filteredEvents = data;
 
-})
+  if (searchQuery) {
+    filteredEvents = data?.filter(
+      (event) =>
+        event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        event.tags?.some((tag) =>
+          tag.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+    );
+  } else if (eventType !== "All") {
+    filteredEvents = data?.filter((event) => event.eventType === eventType);
+  }
 
   const visibleEvents = showAll ? filteredEvents : filteredEvents?.slice(0, 6);
 
