@@ -4,9 +4,16 @@ import useFetch from "../useFetch";
 
 const EventListing = ({ searchQuery }) => {
   const [eventType, setEventType] = useState("All");
-  const [showAll, setShowAll] = useState(false);
+  const [showAll, setShowAll] = useState(false)
 
-  const { data, loading, error } = useFetch("/", []);
+  let endpoint = "/"
+  if(eventType === "Online"){
+    endpoint = "/online"
+  }else if(eventType === "Offline"){
+    endpoint = "/offline"
+  }
+
+  const { data, loading, error } = useFetch(endpoint, [eventType]);
 
   let filteredEvents = data;
 
@@ -18,11 +25,9 @@ const EventListing = ({ searchQuery }) => {
           tag.toLowerCase().includes(searchQuery.toLowerCase())
         )
     );
-  } else if (eventType !== "All") {
-    filteredEvents = data?.filter((event) => event.eventType === eventType);
-  }
+  } 
 
-  const visibleEvents = showAll ? filteredEvents : filteredEvents?.slice(0, 6);
+  const visibleEvents = showAll ? filteredEvents : filteredEvents?.slice(0, 6)
 
   return (
     <>
@@ -34,7 +39,7 @@ const EventListing = ({ searchQuery }) => {
             </div>
             <div className="col-md-auto text-end">
               <select
-                id=""
+                id="eventType"
                 className="form-select form-select-sm w-auto text-muted"
                 style={{
                   minWidth: "150px",
@@ -45,7 +50,7 @@ const EventListing = ({ searchQuery }) => {
                 value={eventType}
                 onChange={(e) => {
                   setEventType(e.target.value);
-                  setShowAll(false);
+                  setShowAll(false)
                 }}
               >
                 <option value="All">Both Events</option>
@@ -58,8 +63,8 @@ const EventListing = ({ searchQuery }) => {
         <section className="container py-4">
           <div>
             {loading && "Loading..."}
-            {error && <p className="text-danger">{error}</p>}
-            {filteredEvents?.length === 0 && (
+            {error && <p className="text-danger">Failed to fetch events. {error}</p>}
+            {!loading && !error && filteredEvents?.length === 0 && (
               <p className="text-muted text-center">
                 No events match your search.
               </p>
