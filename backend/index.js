@@ -26,3 +26,5 @@ if (process.env.NODE_ENV !== "serverless"){
 }
 
 module.exports = app
+
+// Trigger new Vercel deployment.
