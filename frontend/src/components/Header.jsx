@@ -1,12 +1,19 @@
 import { useState } from 'react';
 import { FaSearch} from 'react-icons/fa'
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const Header = ({onSearch}) => {
   const [inputValue, setInputValue] = useState("")
+  const navigate = useNavigate()
 
   const handleSearch = () => {
     onSearch(inputValue.toLowerCase())
     setInputValue("")
+  }
+
+  const handleLogoClick = () => {
+    onSearch('')
+    navigate('/')
   }
 
   return(
@@ -14,7 +21,7 @@ const Header = ({onSearch}) => {
     <div className="container">
       <div className="row justify-content-between">
         <div className="col-md-9">
-          <h3 style={{ fontFamily: "'Pacifico', cursive", fontSize: '32px', color: '#f64060' }}>MeetUP</h3>
+          <span onClick={handleLogoClick} className="navbar-brand" style={{ fontFamily: "'Pacifico', cursive", fontSize: '32px', color: '#f64060', cursor: "pointer" }}>MeetUP</span>
         </div>
         <div className="col-md-auto text-end">
           <div className="input-group input-group-sm">

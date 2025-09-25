@@ -11,6 +11,7 @@ import EventDetails from "./pages/EventDetails.jsx"
 
 const router = createBrowserRouter([
   {path: "/", element: <App />},
+  
   {path: "/events/:id", element: <EventDetails />}
 ])
 
