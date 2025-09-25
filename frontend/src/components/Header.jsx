@@ -7,13 +7,16 @@ const Header = ({onSearch}) => {
   const navigate = useNavigate()
 
   const handleSearch = () => {
-    onSearch(inputValue.toLowerCase())
+    navigate('/')    
+    setTimeout(() => {
+      onSearch(inputValue.toLowerCase())
+    }, 0);
     setInputValue("")
   }
 
   const handleLogoClick = () => {
-    onSearch('')
     navigate('/')
+    onSearch('')
   }
 
   return(
@@ -21,7 +24,7 @@ const Header = ({onSearch}) => {
     <div className="container">
       <div className="row justify-content-between">
         <div className="col-md-9">
-          <span onClick={handleLogoClick} className="navbar-brand" style={{ fontFamily: "'Pacifico', cursive", fontSize: '32px', color: '#f64060', cursor: "pointer" }}>MeetUP</span>
+          <NavLink to="/" onClick={handleLogoClick} className="navbar-brand" style={{ fontFamily: "'Pacifico', cursive", fontSize: '32px', color: '#f64060', cursor: "pointer" }}>MeetUP</NavLink>
         </div>
         <div className="col-md-auto text-end">
           <div className="input-group input-group-sm">
