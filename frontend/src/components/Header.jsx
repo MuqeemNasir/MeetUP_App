@@ -6,17 +6,29 @@ const Header = ({onSearch}) => {
   const [inputValue, setInputValue] = useState("")
   const navigate = useNavigate()
 
-  const handleSearch = () => {
-    navigate('/')    
-    setTimeout(() => {
-      onSearch(inputValue.toLowerCase())
-    }, 0);
-    setInputValue("")
-  }
+  // const handleSearch = () => {
+  //   navigate('/')    
+  //   setTimeout(() => {
+  //     onSearch(inputValue.toLowerCase())
+  //   }, 0);
+  //   setInputValue("")
+  // }
 
   const handleLogoClick = () => {
     navigate('/')
     onSearch('')
+    setInputValue("")
+  }
+
+  const handleInputChange = (e) => {
+    const value = e.target.value.toLowerCase()
+    setInputValue(value)
+    performSearch(value)
+  }
+
+  const performSearch = (query) => {
+    navigate('/')
+    onSearch(query)
   }
 
   return(
@@ -28,7 +40,7 @@ const Header = ({onSearch}) => {
         </div>
         <div className="col-md-auto text-end">
           <div className="input-group input-group-sm">
-            <button className="input-group-text bg-white border-end-0 px-2" onClick={handleSearch} style={{cursor: "pointer"}}>
+            <button className="input-group-text bg-white border-end-0 px-2">
               <FaSearch style={{color: "#6c757d", fontSize: "0.85rem"}} />
             </button>
             <input
@@ -38,10 +50,8 @@ const Header = ({onSearch}) => {
             aria-label="Search"
             style={{ borderRadius: '0.375rem', fontSize: "0.875rem", padding: "0.4rem 0.1rem" }}
             value={inputValue}
-            onChange={e => setInputValue(e.target.value)}
-            onKeyDown={e => {
-              if (e.key === "Enter") handleSearch()
-            }}
+            onChange={handleInputChange}
+            
           />
           </div>
         </div>
