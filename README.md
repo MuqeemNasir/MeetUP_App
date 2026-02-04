@@ -12,6 +12,20 @@ MeetUP is a dynamic event management platform that allows users to browse upcomi
 - **Frontend**: [https://meet-up-app-ui.vercel.app/](https://meet-up-app-ui.vercel.app/)
 - **Backend API**: [https://meet-up-app-taupe.vercel.app/api/events](https://meet-up-app-taupe.vercel.app/api/events)
 
+## Environment Setup
+To run this project locally, you must configure the following environment variables:
+### Backend (/backend/.env)
+```
+MONGODB_URI=mongodb+srv://neoGStudent:MUqeem786%24@neog.aqqwr1m.mongodb.net/?retryWrites=true&w=majority&appName=neoG
+PORT=3000
+NODE_ENV=development
+```
+
+### Frontend (/frontend/.env)
+```
+VITE_API_URL=https://meet-up-app-ui.vercel.app/ || http://localhost:3000/api/events
+```
+
 ## Quick Start
 ```bash
 # Clone the repository
@@ -41,32 +55,54 @@ npm run dev
 - **Deployment**: Vercel (Serverless Functions for Backend).
 - **Data Fetching**: Custom useFetch hook with useEffect for synchronized state management.
 
+## Demo Video
+Watch a walkthrough of all major features of this app:<br>
+[Watch Video Demo](https://drive.google.com/file/d/1VwvjV7jPaWa4BDcgLZrkphV162BmFMGs/view?usp=sharing)
+
+
 ## Features
-### Event Discovery (Home)
-- **Dynamic Search**: Real-time filtering of events by Title or Tags (e.g., "Marketing", "Tech").
-- **Type Filtering**: Toggle between "Online", "Offline", or "Both" events using a refined dropdown interface.
-- **Smart Listing**: Displays events in a responsive grid with "See More" pagination logic for optimal performance.
+### Home & Search
+- **Displays a curated list** of upcoming events with responsive image thumbnails and status badges.
+- **Executes real-time searches** across event titles and tags to help users find specific topics instantly.
+- **Synchronizes navigation** so that searching from the header automatically redirects to the filtered listing.
 
-### Event Details (Deep Dive)
-- **Speaker Profiles**: Dedicated section showing speaker images, names, and designations.
-- **Automated Scheduling**: Logic-driven date and time formatting, including automatic end-time calculation (3-hour duration blocks).
-- **Venue Integration**: Displays specific addresses for offline events and clear labeling for online webinars.
-- **Additional Metadata**: Clear visibility on Dress Code, Age Restrictions, and Pricing (Free/Paid).
+### Event Management
+- **Filters events dynamically** by "Online" or "Offline" status using a specialized dropdown menu.
+- **Implements "See All" logic** to manage large event volumes while maintaining high UI performance.
+- **Categorizes content** through interactive tags that simplify browsing by interest (e.g., Marketing, Tech).
 
-### Search & Navigation
-- **Persistent Header**: Search bar accessible from any page that redirects users to filtered results.
-- **Interactive Tags**: Clickable/viewable event tags to categorize content.
+### Event Details
+- **Visualizes speaker profiles** with high-quality images, names, and professional designations.
+- **Provides venue intelligence** by displaying physical addresses for offline events and clear "Online" labels for webinars.
+- **Details attendance requirements** including dress codes, age restrictions, and pricing metadata.
+- **Calculates event duration** automatically to show precise start and end times for attendees.
 
 ## API Reference
 ### GET /api/events
 List all events available in the database.<br>
+Sample Response: 
+```
+{ "_id": "123", "title": "Marketing Seminar", "eventType": "Online", "date": "2025-05-10" }
+```
 
 ### GET /api/events/eventId/:id
-Fetch full details for a specific event including speaker arrays and description.<br>
+Fetch full details for a specific event.<br>
+Sample Response:
+```
+{ 
+  "_id": "123", 
+  "title": "Marketing Seminar", 
+  "speaker": [{ "name": "Jane Smith", "image": "url" }],
+  "description": "Full event details here..."
+}
+```
 
 ### GET /api/events/online
-Fetch only events where eventType is "Online".<br>
-
+Fetch only virtual events.<br>
+Sample Response:
+```
+[{ "title": "React Workshop", "eventType": "Online" }]
+```
 ### GET /api/events/offline
 Fetch only events where eventType is "Offline".<br>
 
