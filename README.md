@@ -104,7 +104,11 @@ Sample Response:
 [{ "title": "React Workshop", "eventType": "Online" }]
 ```
 ### GET /api/events/offline
-Fetch only events where eventType is "Offline".<br>
+Fetch only real events.<br>
+Sample Response:
+```
+[{ "title": "React Workshop", "eventType": "Offline" }]
+```
 
 ### POST /api/events
 Create a new event.<br>
